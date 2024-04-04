@@ -1,0 +1,5 @@
+name: ProhibitDuplicateMessages
+version: '${project.version}'
+main: fun.xiantiao.prohibitduplicatemessages.ProhibitDuplicateMessages
+api-version: '1.13'
+folia-supported: true

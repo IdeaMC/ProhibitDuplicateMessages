@@ -1,0 +1,2 @@
+# ProhibitDuplicateMessages
+让玩家不能重复说话
