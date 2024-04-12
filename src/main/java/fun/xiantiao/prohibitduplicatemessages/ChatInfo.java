@@ -36,27 +36,34 @@ public class ChatInfo implements Listener {
             return;
         }
 
+        player.sendMessage(ChatColor.YELLOW + "debug-001");
+
         // debug
         if ("debug-1".equals(event.getMessage())) {
             event.setCancelled(true);
             player.sendMessage(ChatColor.YELLOW + "debug-1");
-            player.sendMessage(chatInfo.get(player).toString());
+            player.sendMessage(playerChatInfo.toString());
             return;
         }
         // debug
 
+        player.sendMessage(ChatColor.YELLOW + "debug-002");
+
         // 历遍玩家的历史聊天消息，清理过期的数据
-        Set<Map.Entry<Long, String>> entries = new HashSet<>(playerChatInfo.entrySet());
+        Set<Map.Entry<Long, String>> entries = new HashSet<>(playerChatInfo.entrySet()); // 防并行修改
         for (Map.Entry<Long, String> entry : entries) {
             Long messageSendTime = entry.getKey(); // 这条消息的发送时间
 
             // 判断这条消息的发送时间是否超过了limitTime，是的话删除
-            // 这条消息发送的时间+limitTime > 现在的时间 就是过期了
+            // 这条消息发送的时间+limitTime < 现在的时间 就是过期了
             //  100               5           110
-            if (messageSendTime + limitTime > System.currentTimeMillis()) {
+            if (messageSendTime + limitTime < System.currentTimeMillis()) {
                 playerChatInfo.remove(messageSendTime);
             }
         }
+
+        player.sendMessage(ChatColor.YELLOW + "debug-003");
+
 
         // 如果列表里面有玩家发送过的消息，取消事件 并且提醒
         // 否则向历史聊天记录添加记录与设置上一次消息
@@ -64,6 +71,7 @@ public class ChatInfo implements Listener {
             event.setCancelled(true);
             player.sendMessage(ProhibitDuplicateMessages.getInstance().getConfig().getString("message"));
         } else {
+            player.sendMessage(ChatColor.YELLOW + "debug-004");
             playerChatInfo.put(System.currentTimeMillis(),event.getMessage());
         }
     }
