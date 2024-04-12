@@ -1,5 +1,6 @@
 package fun.xiantiao.prohibitduplicatemessages;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +23,7 @@ public class ChatInfo implements Listener {
         // 初始化变量
         Player player = event.getPlayer();
 
+
         // 从内存获取玩家历史消息记录
         Map<Long,String> playerChatInfo = chatInfo.get(player);
         // 如果为空就创建一个playerChatInfo放入chatInfo
@@ -31,6 +33,15 @@ public class ChatInfo implements Listener {
             chatInfo.put(player,now);
             return;
         }
+
+        // debug
+        if ("debug-1".equals(event.getMessage())) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.YELLOW + "debug-1");
+            player.sendMessage(chatInfo.get(player).toString());
+            return;
+        }
+        // debug
 
         // 历遍玩家的历史聊天消息，清理过期的数据
         for (Map.Entry<Long, String> entry : playerChatInfo.entrySet()) {
