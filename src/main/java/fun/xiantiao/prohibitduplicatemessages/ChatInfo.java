@@ -1,15 +1,12 @@
 package fun.xiantiao.prohibitduplicatemessages;
 
-import org.bukkit.ChatColor;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author xiantiao
@@ -17,20 +14,22 @@ import java.util.Set;
  * ProhibitDuplicateMessages
  */
 public class ChatInfo implements Listener {
+    public static List<Component> messages;
     static long limitTime = 10000;
     static Map<Player,Map<Long,String>> chatInfo;
 
     @EventHandler
-    public void chat(AsyncPlayerChatEvent event) {
+    public void chat(AsyncChatEvent event) {
         // 初始化变量
         Player player = event.getPlayer();
-        
+        String message = event.message().toString();
+
         // 从内存获取玩家历史消息记录
         Map<Long,String> playerChatInfo = chatInfo.get(player);
         // 如果为空就创建一个playerChatInfo放入chatInfo
         if (playerChatInfo == null) {
             Map<Long,String> now = new HashMap<>();
-            now.put(System.currentTimeMillis(),event.getMessage());
+            now.put(System.currentTimeMillis(),message);
             chatInfo.put(player,now);
             return;
         }
@@ -50,11 +49,13 @@ public class ChatInfo implements Listener {
 
         // 如果列表里面有玩家发送过的消息，取消事件 并且提醒
         // 否则向历史聊天记录添加记录与设置上一次消息
-        if (playerChatInfo.containsValue(event.getMessage())) {
-            event.setCancelled(true);
-            player.sendMessage(ProhibitDuplicateMessages.getInstance().getConfig().getString("message"));
+        if (playerChatInfo.containsValue(message)) {
+            event.callEvent();
+            for (Component s : messages) {
+                player.sendMessage(s);
+            }
         } else {
-            playerChatInfo.put(System.currentTimeMillis(),event.getMessage());
+            playerChatInfo.put(System.currentTimeMillis(),message);
         }
     }
 }
