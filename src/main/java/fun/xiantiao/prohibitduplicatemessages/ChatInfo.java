@@ -24,8 +24,7 @@ public class ChatInfo implements Listener {
     public void chat(AsyncPlayerChatEvent event) {
         // 初始化变量
         Player player = event.getPlayer();
-
-
+        
         // 从内存获取玩家历史消息记录
         Map<Long,String> playerChatInfo = chatInfo.get(player);
         // 如果为空就创建一个playerChatInfo放入chatInfo
@@ -35,19 +34,6 @@ public class ChatInfo implements Listener {
             chatInfo.put(player,now);
             return;
         }
-
-        player.sendMessage(ChatColor.YELLOW + "debug-001");
-
-        // debug
-        if ("debug-1".equals(event.getMessage())) {
-            event.setCancelled(true);
-            player.sendMessage(ChatColor.YELLOW + "debug-1");
-            player.sendMessage(playerChatInfo.toString());
-            return;
-        }
-        // debug
-
-        player.sendMessage(ChatColor.YELLOW + "debug-002");
 
         // 历遍玩家的历史聊天消息，清理过期的数据
         Set<Map.Entry<Long, String>> entries = new HashSet<>(playerChatInfo.entrySet()); // 防并行修改
@@ -62,16 +48,12 @@ public class ChatInfo implements Listener {
             }
         }
 
-        player.sendMessage(ChatColor.YELLOW + "debug-003");
-
-
         // 如果列表里面有玩家发送过的消息，取消事件 并且提醒
         // 否则向历史聊天记录添加记录与设置上一次消息
         if (playerChatInfo.containsValue(event.getMessage())) {
             event.setCancelled(true);
             player.sendMessage(ProhibitDuplicateMessages.getInstance().getConfig().getString("message"));
         } else {
-            player.sendMessage(ChatColor.YELLOW + "debug-004");
             playerChatInfo.put(System.currentTimeMillis(),event.getMessage());
         }
     }
