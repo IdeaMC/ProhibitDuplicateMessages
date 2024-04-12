@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,11 +22,13 @@ public class ChatInfo implements Listener {
         // 初始化变量
         Player player = event.getPlayer();
 
-        Map<Long,String> playerChatInfo = chatInfo.get(player); // 从内存获取玩家历史消息记录
-
-        // 如果玩家的历史聊天记录没有东西，那么存入当前的聊天消息，并且停止运行
-        if (!chatInfo.containsKey(player))  {
-            playerChatInfo.put(System.currentTimeMillis(),event.getMessage());
+        // 从内存获取玩家历史消息记录
+        Map<Long,String> playerChatInfo = chatInfo.get(player);
+        // 如果为空就创建一个playerChatInfo放入chatInfo
+        if (playerChatInfo == null) {
+            Map<Long,String> now = new HashMap<>();
+            now.put(System.currentTimeMillis(),event.getMessage());
+            chatInfo.put(player,now);
             return;
         }
 
