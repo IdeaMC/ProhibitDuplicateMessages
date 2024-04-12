@@ -7,7 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author xiantiao
@@ -44,7 +46,8 @@ public class ChatInfo implements Listener {
         // debug
 
         // 历遍玩家的历史聊天消息，清理过期的数据
-        for (Map.Entry<Long, String> entry : playerChatInfo.entrySet()) {
+        Set<Map.Entry<Long, String>> entries = new HashSet<>(playerChatInfo.entrySet());
+        for (Map.Entry<Long, String> entry : entries) {
             Long messageSendTime = entry.getKey(); // 这条消息的发送时间
 
             // 判断这条消息的发送时间是否超过了limitTime，是的话删除
