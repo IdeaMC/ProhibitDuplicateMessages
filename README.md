@@ -1,2 +1,9 @@
 # ProhibitDuplicateMessages
 让玩家不能重复说话
+
+```yaml
+message:
+  - "不能重复说话。"
+
+# 多长时间内阻止玩家说同一句话
+allowTime: 10000

@@ -6,7 +6,7 @@
 
     <groupId>fun.xiantiao</groupId>
     <artifactId>ProhibitDuplicateMessages</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>ProhibitDuplicateMessages</name>
