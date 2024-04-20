@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public final class ProhibitDuplicateMessages extends JavaPlugin implements Liste
         初始化变量
          */
         ChatInfo.chatInfo = new HashMap<>();
+        ChatInfo.messages = new ArrayList<>();
         ChatInfo.limitTime = getConfig().getLong("allowTime");
 
         List<String> message = getConfig().getStringList("message").stream()
@@ -39,8 +41,8 @@ public final class ProhibitDuplicateMessages extends JavaPlugin implements Liste
 
         getServer().getPluginManager().registerEvents(new ChatInfo(),this);
 
-        getLogger().info(ChatColor.YELLOW + "由IdeaMC团队制作 - 免费 开源 好用");
-        getLogger().info(ChatColor.YELLOW + "Github  - https://github.com/IdeaMC/ProhibitDuplicateMessages");
-        getLogger().info(ChatColor.YELLOW + "QQGroup - 336027376");
+        getLogger().info("由IdeaMC团队制作 - 免费 开源 好用");
+        getLogger().info("Github  - https://github.com/IdeaMC/ProhibitDuplicateMessages");
+        getLogger().info("QQGroup - 336027376");
     }
 }

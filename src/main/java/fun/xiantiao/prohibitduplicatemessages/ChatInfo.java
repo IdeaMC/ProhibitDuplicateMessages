@@ -50,7 +50,7 @@ public class ChatInfo implements Listener {
         // 如果列表里面有玩家发送过的消息，取消事件 并且提醒
         // 否则向历史聊天记录添加记录与设置上一次消息
         if (playerChatInfo.containsValue(message)) {
-            event.callEvent();
+            event.setCancelled(true);
             for (Component s : messages) {
                 player.sendMessage(s);
             }
