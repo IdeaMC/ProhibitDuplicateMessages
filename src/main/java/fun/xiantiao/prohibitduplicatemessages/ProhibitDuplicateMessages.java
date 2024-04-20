@@ -1,6 +1,7 @@
 package fun.xiantiao.prohibitduplicatemessages;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,5 +38,9 @@ public final class ProhibitDuplicateMessages extends JavaPlugin implements Liste
         }
 
         getServer().getPluginManager().registerEvents(new ChatInfo(),this);
+
+        getLogger().info(ChatColor.YELLOW + "由IdeaMC团队制作 - 免费 开源 好用");
+        getLogger().info(ChatColor.YELLOW + "Github  - https://github.com/IdeaMC/ProhibitDuplicateMessages");
+        getLogger().info(ChatColor.YELLOW + "QQGroup - 336027376");
     }
 }
