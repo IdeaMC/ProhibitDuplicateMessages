@@ -1,6 +1,8 @@
 # ProhibitDuplicateMessages
 让玩家不能重复说话
 
+[QQ交流群](https://qm.qq.com/q/drITkQFW00)
+
 ```yaml
 message:
   - "不能重复说话。"
